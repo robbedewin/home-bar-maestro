@@ -1,3 +1,8 @@
+import time
+
+from api_client import search_ingredient_by_name
+
+
 class InventoryItem:
     def __init__(self, name: str, brand: str, category: str, quantity: str, price: float, user_notes: str = ""): 
         """
@@ -78,4 +83,30 @@ class Garnish(InventoryItem):
         return garnish_details
     
 
+def enhance_inventory_item_with_api_data(item): # item is Spirit, Mixer, etc.
+    if hasattr(item, 'category'): # Or check item.name
+        print(f"Attempting to enhance: {item.name} (Category: {item.category})")
+        api_data = search_ingredient_by_name(item.category) # Or item.name
+        
+        if api_data and api_data.get("ingredients"):
+            ing_info = api_data["ingredients"][0]
+            
+            # Update description if available and yours is empty/generic
+            if ing_info.get("strDescription") and (not hasattr(item, 'tasting_notes') or not item.tasting_notes):
+                if hasattr(item, 'tasting_notes'):
+                    item.tasting_notes = ing_info["strDescription"]
+                    print(f"  Updated tasting notes for {item.name} from API.")
+                elif hasattr(item, 'user_notes') and not item.user_notes: # fallback to user_notes
+                    item.user_notes = ing_info["strDescription"]
+                    print(f"  Updated user_notes for {item.name} with API description.")
 
+            # Update ABV if it's a Spirit and ABV is available/missing
+            if isinstance(item, Spirit) and ing_info.get("strABV") and item.abv == 0: # Assuming 0 means not set
+                try:
+                    item.abv = float(ing_info["strABV"])
+                    print(f"  Updated ABV for {item.name} to {item.abv}% from API.")
+                except ValueError:
+                    print(f"  Could not parse ABV '{ing_info.get('strABV')}' for {item.name}.")
+            # You could also update item.category with ing_info.get("strType") if it's more accurate
+    # Small delay
+    time.sleep(0.1)
