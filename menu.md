@@ -1,6 +1,12 @@
 # Bar Inventory
 
 
+## Campari
+
+- **Campari** - €20.00
+  - *Essential for Negronis.*
+
+
 ## Cola
 
 - **Coca-Cola Classic** (Coca-Cola) - €4.00
@@ -64,12 +70,6 @@
   - **
 
 
-## Liqueur
-
-- **Campari** - €20.00
-  - *Essential for Negronis.*
-
-
 ## Orange
 
 - **Orange** (Fresh) - €0.90
@@ -110,6 +110,16 @@
   - *Since 2010, at least four tonic syrups have been released in the United States. Consumers add carbonated water to the syrup to make tonic water; this allows drinkers to vary the intensity of the flavour.*
 
 
+## Vermouth
+
+- **Martini Reserve Riserva Speciale Rubino** (Martini) - €15.00
+  - *Vermouth (/vərˈmuːθ/ ver-MOOTH; also UK: /ˈvɜːrməθ/;[1][2]) is an aromatized, fortified wine flavored with various botanicals (roots, barks, flowers, seeds, herbs, and spices).*
+  - **
+  - *The modern versions of the beverage were first produced in the mid to late 18th century in Turin, Italy. While vermouth was traditionally used for medicinal purposes, its true claim to fame is as an aperitif, with fashionable cafes in Turin serving it to guests around the clock. However, in the late 19th century it became popular with bartenders as a key ingredient in many classic cocktails that have survived to date, such as the Martini, the Manhattan, the Rob Roy, and the Negroni. In addition to being consumed as an aperitif or cocktail ingredient, vermouth is sometimes used as an alternative white wine in cooking.*
+  - **
+  - *Historically, there have been two main types of vermouth: sweet and dry. Responding to demand and competition, vermouth manufacturers have created additional styles, including extra-dry white, sweet white (bianco), red, amber (ambre or rosso), and rosé. Vermouth is produced by starting with a base of a neutral grape wine or unfermented wine must. Each manufacturer adds additional alcohol and a proprietary mixture of dry ingredients, consisting of aromatic herbs, roots, and barks, to the base wine, base wine plus spirit or spirit only – which may be redistilled before adding to the wine or unfermented wine must. After the wine is aromatized and fortified, the vermouth is sweetened with either cane sugar or caramelized sugar, depending on the style. Italian and French companies produce most of the vermouth consumed throughout the world, although the United States and the United Kingdom are also producers.*
+
+
 ## Vodka
 
 - **Absolut Vodka** (Absolut) - €22.00
@@ -146,6 +156,23 @@
 - 2 oz of Gin
 - 5 oz of Tonic water
 - 1 of Lime
+
+**Instructions:**
+No instructions provided.
+
+
+
+## Negroni
+
+![Negroni Image](data/user_cocktail_images/negroni.png)
+
+*Ordinary Drink*
+
+
+**Ingredients:**
+- 1 oz of Gin
+- 1 oz of Campari
+- 1 oz of Sweet Vermouth
 
 **Instructions:**
 No instructions provided.

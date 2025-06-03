@@ -17,7 +17,7 @@ def create_bar_inventory():
                type_of_liquor="Swedish Vodka", abv=40.0, origin="Sweden"),
         Spirit(name="Jameson Irish Whiskey", brand="Jameson", category="Irish Whiskey", quantity="700ml", price=25.0,
                type_of_liquor="Blended Irish Whiskey", abv=40.0, origin="Ireland"),
-        Spirit(name="Campari", brand="Campari", category="Liqueur", quantity="700ml", price=20.0,
+        Spirit(name="Campari", brand="Campari", category="Campari", quantity="700ml", price=20.0,
                type_of_liquor="Bitter Aperitif", abv=25.0, origin="Italy", 
                user_notes="Essential for Negronis."),
         Spirit(name="Johnnie Walker Blue Label", brand="Johnnie Walker", category="Scotch Whisky", quantity="1L", price=180.0, type_of_liquor="Blended Scotch Whisky",
@@ -32,6 +32,8 @@ def create_bar_inventory():
                 user_notes="De gebruikte botanicals zijn engelwortel, jeneverbessen, kardemom, korianderzaad en sinaasappelzeste. Samen zorgt dit voor een soepel en kruidig karakter."),
         Spirit(name= "Monkey 47 Schwarzwald Dry Gin", brand="Monkey 47", category="Gin",
                quantity="500ml", price=36.5, abv=47.0, origin="Germany", type_of_liquor="Schwarzwald Dry Gin",),
+        Spirit(name="Martini Reserve Riserva Speciale Rubino", brand="Martini", category="Vermouth",
+               quantity="750ml", price=15.0, abv=18.0, origin="Italy", type_of_liquor="Sweet Vermouth",),
         
         # ... add all your father's spirits ...
 
