@@ -4,6 +4,10 @@ data/
 # Notes for developers:
 notes.md
 
+# Output files
+menu.*
+menu_*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
