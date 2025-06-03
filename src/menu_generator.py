@@ -8,7 +8,11 @@ from cocktail_manager import get_all_recipes, find_makeable_cocktails, CocktailR
 from data_handler import load_inventory, DEFAULT_INVENTORY_FILE
 
 OUTPUT_FILENAME = "menu.md"
-DEFAULT_INVENTORY_FILE = "data/inventory_VD85.json"
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(__file__))
+DEFAULT_INVENTORY_FILE = os.path.join(PROJECT_ROOT, "data", "inventory_VD85.json")
+
+
 
 def format_inventory_markdown(inventory_list: list[InventoryItem], show_prices: bool, show_descriptions: bool) -> str:
     """
