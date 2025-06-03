@@ -1,5 +1,7 @@
 import time
 from api_client import search_cocktail_by_name
+import json
+import os
 
 class IngredientRequirement:
     """
@@ -37,7 +39,8 @@ class CocktailRecipe:
     """
     def __init__(self, name: str, ingredients: list[IngredientRequirement],
                  preparation_instructions: str, garnish_suggestion: str = "",
-                 description: str = "", image_url: str = ""):
+                 description: str = "", image_url: str = "",
+                 local_image_path: str = None):
         """
         Initializes a CocktailRecipe.
 
@@ -54,6 +57,7 @@ class CocktailRecipe:
         self.garnish_suggestion = garnish_suggestion
         self.description = description
         self.image_url = image_url  # Optional, can be used for future phases with images
+        self.local_image_path = local_image_path  # Optional, for local image storage in future phases
 
     def display_recipe(self):
         """Prints the details of the cocktail recipe."""
@@ -65,7 +69,9 @@ class CocktailRecipe:
             print(f"  - {str(req)}") # Uses the __str__ method of IngredientRequirement
         if self.garnish_suggestion:
             print(f"Garnish: {self.garnish_suggestion}")
-        if self.image_url:
+        if self.local_image_path:
+            print(f"Local Image Path: {self.local_image_path}")
+        elif self.image_url:
             print(f"Image: {self.image_url}")
         print(f"Instructions: {self.preparation_instructions}")
 
@@ -220,40 +226,156 @@ def _parse_api_cocktail_data(api_drink_data: dict) -> CocktailRecipe | None:
         preparation_instructions=instructions if instructions else "No instructions provided.",
         garnish_suggestion=garnish,
         description=description,
-        image_url=image_url if image_url else ""
+        image_url=image_url if image_url else "",
+        local_image_path=None  # Will be set later in Step 2
     )
 
 # Keep a list of classic cocktail names you want to fetch
 CLASSIC_COCKTAIL_NAMES = [
     "Margarita", "Martini", "Old Fashioned", "Mojito", "Daiquiri",
     "Manhattan", "Gin and Tonic", "Negroni", "Whiskey Sour", "Cosmopolitan",
-    "Moscow Mule", "Pina Colada" # Add more as you like
+    "Moscow Mule", "Pina Colada", "Mai Tai", "Bloody Mary", "Tequila Sunrise",
+    "Screwdriver", "Long Island Iced Tea", "Bellini", "French 75", "Caipirinha",
 ]
 
 _COCKTAIL_RECIPE_CACHE = {} # In-memory cache for CocktailRecipe objects for the current session
 
 def get_all_recipes() -> list[CocktailRecipe]:
     """
-    Fetches a predefined list of classic cocktails from TheCocktailDB API
-    and returns them as CocktailRecipe objects. Uses an in-memory cache.
+    Fetches all cocktail recipes.
+    Prioritizes loading from CURATED_COCKTAILS_FILE.
+    If not found, fetches a predefined list of classics from TheCocktailDB API,
+    saves them to CURATED_COCKTAILS_FILE, and returns them.
+    Uses an in-memory cache for the session.
     """
-    global _COCKTAIL_RECIPE_CACHE
-    
-    fetched_recipes = []
-    for name in CLASSIC_COCKTAIL_NAMES:
-        if name in _COCKTAIL_RECIPE_CACHE:
-            fetched_recipes.append(_COCKTAIL_RECIPE_CACHE[name])
+    global _COCKTAIL_RECIPE_CACHE # In-memory cache for the session
+
+    # Try loading from the curated JSON file first
+    loaded_recipes = load_curated_cocktail_recipes(CURATED_COCKTAILS_FILE)
+    if loaded_recipes:
+        # Populate in-memory cache from file for consistency if needed by other parts
+        for recipe in loaded_recipes:
+            if recipe.name not in _COCKTAIL_RECIPE_CACHE:
+                 _COCKTAIL_RECIPE_CACHE[recipe.name] = recipe
+        return loaded_recipes
+
+    # If curated file not found or empty, fetch from API, save, and return
+    print(f"'{CURATED_COCKTAILS_FILE}' not found or empty. Fetching classics from API...")
+    api_fetched_recipes = []
+    for name in CLASSIC_COCKTAIL_NAMES: #
+        if name in _COCKTAIL_RECIPE_CACHE: # Should be empty if file wasn't loaded
+            recipe_obj = _COCKTAIL_RECIPE_CACHE[name]
+            if recipe_obj: # Make sure it's not None if cache was somehow populated with a miss
+                 api_fetched_recipes.append(recipe_obj)
             continue
 
-        api_data = search_cocktail_by_name(name)
+        api_data = search_cocktail_by_name(name) #
         if api_data and api_data.get("drinks"):
-            # API might return multiple drinks for a search, take the first one
-            parsed_recipe = _parse_api_cocktail_data(api_data["drinks"][0])
+            # The _parse_api_cocktail_data function needs to create CocktailRecipe objects
+            # Ensure it's using the updated CocktailRecipe constructor (with local_image_path=None)
+            parsed_recipe = _parse_api_cocktail_data(api_data["drinks"][0]) #
             if parsed_recipe:
-                fetched_recipes.append(parsed_recipe)
-                _COCKTAIL_RECIPE_CACHE[name] = parsed_recipe # Cache the parsed object
-                time.sleep(0.2) # Be a little nice to the API, brief pause
+                api_fetched_recipes.append(parsed_recipe)
+                _COCKTAIL_RECIPE_CACHE[name] = parsed_recipe
+                time.sleep(0.2) 
         else:
-            print(f"Could not fetch or parse recipe for: {name}")
-            
-    return fetched_recipes
+            print(f"Could not fetch or parse recipe for: {name} from API.")
+            _COCKTAIL_RECIPE_CACHE[name] = None # Cache the miss to avoid re-fetching in this session
+
+    if api_fetched_recipes:
+        print(f"Saving {len(api_fetched_recipes)} API-fetched recipes to '{CURATED_COCKTAILS_FILE}'...")
+        save_cocktail_recipes_to_json(api_fetched_recipes, CURATED_COCKTAILS_FILE)
+    
+    return api_fetched_recipes
+
+
+def _ingredient_req_to_dict(req: IngredientRequirement) -> dict:
+    return {
+        "category_needed": req.category_needed,
+        "quantity": req.quantity,
+        "specific_brand_optional": req.specific_brand_optional
+    }
+
+def _dict_to_ingredient_req(data: dict) -> IngredientRequirement:
+    return IngredientRequirement(
+        category_needed=data.get("category_needed", ""),
+        quantity=data.get("quantity", ""),
+        specific_brand_optional=data.get("specific_brand_optional")
+    )
+
+def _cocktail_recipe_to_dict(recipe: CocktailRecipe) -> dict:
+    """Converts a CocktailRecipe object to a dictionary for JSON storage."""
+    return {
+        "name": recipe.name,
+        "ingredients": [_ingredient_req_to_dict(req) for req in recipe.ingredients],
+        "preparation_instructions": recipe.preparation_instructions,
+        "garnish_suggestion": recipe.garnish_suggestion,
+        "description": recipe.description,
+        "image_url": recipe.image_url,
+        "local_image_path": recipe.local_image_path # Will be added in Step 2
+    }
+
+def _dict_to_cocktail_recipe(data: dict) -> CocktailRecipe | None:
+    """Converts a dictionary (from JSON) back to a CocktailRecipe object."""
+    try:
+        ingredients_data = data.get("ingredients", [])
+        ingredients = [_dict_to_ingredient_req(req_data) for req_data in ingredients_data]
+
+        # Ensure essential fields are present
+        if not data.get("name") or not ingredients:
+            print(f"Warning: Skipping recipe due to missing name or ingredients. Data: {data.get('name')}")
+            return None
+
+        return CocktailRecipe(
+            name=data.get("name"),
+            ingredients=ingredients,
+            preparation_instructions=data.get("preparation_instructions", "No instructions provided."),
+            garnish_suggestion=data.get("garnish_suggestion", ""),
+            description=data.get("description", ""),
+            image_url=data.get("image_url", ""),
+            local_image_path=data.get("local_image_path") # Will be added in Step 2
+        )
+    except Exception as e:
+        print(f"Error converting dict to CocktailRecipe for '{data.get('name')}': {e}")
+        return None
+
+# --- File path for curated cocktails ---
+CURATED_COCKTAILS_FILE = "data/cocktails.json"
+
+# In src/cocktail_manager.py (continued)
+
+def load_curated_cocktail_recipes(filepath: str = CURATED_COCKTAILS_FILE) -> list[CocktailRecipe]:
+    """Loads cocktail recipes from a JSON file."""
+    if not os.path.exists(filepath):
+        print(f"Info: Curated cocktails file '{filepath}' not found.")
+        return []
+    try:
+        with open(filepath, 'r', encoding='utf-8') as f:
+            list_of_dicts = json.load(f)
+        
+        recipes = []
+        for data in list_of_dicts:
+            recipe = _dict_to_cocktail_recipe(data)
+            if recipe: # Only add if parsing was successful
+                recipes.append(recipe)
+        print(f"Loaded {len(recipes)} recipes from {filepath}")
+        return recipes
+    except (IOError, json.JSONDecodeError) as e:
+        print(f"Error loading or parsing {filepath}: {e}")
+        return []
+
+def save_cocktail_recipes_to_json(recipes: list[CocktailRecipe], filepath: str = CURATED_COCKTAILS_FILE):
+    """Saves a list of CocktailRecipe objects to a JSON file."""
+    try:
+        # Ensure the directory exists
+        directory = os.path.dirname(filepath)
+        if directory and not os.path.exists(directory):
+            os.makedirs(directory)
+            print(f"Created directory: {directory}")
+
+        list_of_dicts = [_cocktail_recipe_to_dict(recipe) for recipe in recipes]
+        with open(filepath, 'w', encoding='utf-8') as f:
+            json.dump(list_of_dicts, f, indent=4)
+        print(f"Saved {len(recipes)} recipes to {filepath}")
+    except IOError as e:
+        print(f"Error saving recipes to {filepath}: {e}")

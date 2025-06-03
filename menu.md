@@ -1,6 +1,12 @@
 # Bar Inventory
 
 
+## Cola
+
+- **Coca-Cola Classic** (Coca-Cola) - €4.00
+  - *Cola is a sweetened, carbonated soft drink flavored with vanilla, cinnamon, citrus oils and other flavorings. Most contain caffeine, which was originally sourced from the kola nut, leading to the drink's name, though other sources are now also used.*
+
+
 ## Dry Vermouth
 
 - **Noilly Prat Original Dry** (Noilly Prat) - €15.00
@@ -13,12 +19,29 @@
 
 ## Gin
 
+- **Copperhead Gin** (Copperhead) - €40.95
+  - *Gin is a distilled alcoholic drink that derives its predominant flavour from juniper berries (Juniperus communis). Gin is one of the broadest categories of spirits, all of various origins, styles, and flavour profiles, that revolve around juniper as a common ingredient.*
+  - **
+  - *From its earliest origins in the Middle Ages, the drink has evolved from a herbal medicine to an object of commerce in the spirits industry. Gin emerged in England after the introduction of the jenever, a Dutch liquor which originally had been a medicine. Although this development had been taking place since early 17th century, gin became widespread after the William of Orange-led 1688 Glorious Revolution and subsequent import restrictions on French brandy.*
+  - **
+  - *Gin today is produced in subtly different ways, from a wide range of herbal ingredients, giving rise to a number of distinct styles and brands. After juniper, gin tends to be flavoured with botanical/herbal, spice, floral or fruit-flavours or often a combination. It is most commonly consumed mixed with tonic water. Gin is also often used as a base spirit to produce flavoured gin-based liqueurs such as, for example, Sloe gin, traditionally by the addition of fruit, flavourings and sugar.*
+
 - **Hendrick's Gin** (Hendrick's) - €35.00
   - *Gin is a distilled alcoholic drink that derives its predominant flavour from juniper berries (Juniperus communis). Gin is one of the broadest categories of spirits, all of various origins, styles, and flavour profiles, that revolve around juniper as a common ingredient.*
   - **
   - *From its earliest origins in the Middle Ages, the drink has evolved from a herbal medicine to an object of commerce in the spirits industry. Gin emerged in England after the introduction of the jenever, a Dutch liquor which originally had been a medicine. Although this development had been taking place since early 17th century, gin became widespread after the William of Orange-led 1688 Glorious Revolution and subsequent import restrictions on French brandy.*
   - **
   - *Gin today is produced in subtly different ways, from a wide range of herbal ingredients, giving rise to a number of distinct styles and brands. After juniper, gin tends to be flavoured with botanical/herbal, spice, floral or fruit-flavours or often a combination. It is most commonly consumed mixed with tonic water. Gin is also often used as a base spirit to produce flavoured gin-based liqueurs such as, for example, Sloe gin, traditionally by the addition of fruit, flavourings and sugar.*
+
+- **Monkey 47 Schwarzwald Dry Gin** (Monkey 47) - €36.50
+  - *Gin is a distilled alcoholic drink that derives its predominant flavour from juniper berries (Juniperus communis). Gin is one of the broadest categories of spirits, all of various origins, styles, and flavour profiles, that revolve around juniper as a common ingredient.*
+  - **
+  - *From its earliest origins in the Middle Ages, the drink has evolved from a herbal medicine to an object of commerce in the spirits industry. Gin emerged in England after the introduction of the jenever, a Dutch liquor which originally had been a medicine. Although this development had been taking place since early 17th century, gin became widespread after the William of Orange-led 1688 Glorious Revolution and subsequent import restrictions on French brandy.*
+  - **
+  - *Gin today is produced in subtly different ways, from a wide range of herbal ingredients, giving rise to a number of distinct styles and brands. After juniper, gin tends to be flavoured with botanical/herbal, spice, floral or fruit-flavours or often a combination. It is most commonly consumed mixed with tonic water. Gin is also often used as a base spirit to produce flavoured gin-based liqueurs such as, for example, Sloe gin, traditionally by the addition of fruit, flavourings and sugar.*
+
+- **Tanqueray No. Ten** (Tanqueray) - €40.00
+  - *Citrusy and floral with a hint of chamomile.*
 
 
 ## Irish Whiskey
@@ -56,6 +79,12 @@
 ## Orange Juice
 
 - **Generic Orange Juice** (Juicy Co.) - €2.00
+
+
+## Scotch Whisky
+
+- **Johnnie Walker Blue Label** (Johnnie Walker) - €180.00
+  - *Rich and complex with notes of honey, vanilla, and smoke.*
 
 
 ## Sweet Vermouth
@@ -119,5 +148,5 @@
 - 1 of Lime
 
 **Instructions:**
-Pour the gin and the tonic water into a highball glass almost filled with ice cubes. Stir well. Garnish with the lime wedge.
+No instructions provided.
 

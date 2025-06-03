@@ -65,10 +65,21 @@ def format_cocktails_markdown(makeable_cocktails: list[CocktailRecipe]) -> str:
     for cocktail in sorted(makeable_cocktails, key=lambda x: x.name): # Sort cocktails by name
         markdown_parts.append(f"\n## {cocktail.name}\n")
         
-        if cocktail.image_url:
+        image_md = ""
+        if cocktail.local_image_path:
+            # Assuming local_image_path is relative to the project root or a known 'data' subdir
+            # For Markdown, ensure the path is accessible if the MD file is moved.
+            # A common practice is to have images in a subdirectory like 'images' or 'data/user_cocktail_images'
+            # and use relative paths like "images/my_margarita.jpg".
+            image_md = f"![{cocktail.name} Image]({cocktail.local_image_path})\n" 
+        elif cocktail.image_url:
             # For Markdown, this is a link. For actual embedding in PDF, this URL would be downloaded.
-            markdown_parts.append(f"![{cocktail.name} Image]({cocktail.image_url})\n") 
+            image_md = f"![{cocktail.name} Image]({cocktail.image_url})\n"
+        
+        if image_md: # Only append if there's an image string
+            markdown_parts.append(image_md)
             
+              
         if cocktail.description:
             markdown_parts.append(f"*{cocktail.description}*\n")
             

@@ -1,6 +1,9 @@
 # Data files
 data/
 
+# Notes for developers:
+notes.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

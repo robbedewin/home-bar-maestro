@@ -20,6 +20,19 @@ def create_bar_inventory():
         Spirit(name="Campari", brand="Campari", category="Liqueur", quantity="700ml", price=20.0,
                type_of_liquor="Bitter Aperitif", abv=25.0, origin="Italy", 
                user_notes="Essential for Negronis."),
+        Spirit(name="Johnnie Walker Blue Label", brand="Johnnie Walker", category="Scotch Whisky", quantity="1L", price=180.0, type_of_liquor="Blended Scotch Whisky",
+               abv=40.0, origin="Scotland", tasting_notes="Rich and complex with notes of honey, vanilla, and smoke."),
+        Spirit(name="Tanqueray No. Ten", brand="Tanqueray", category="Gin", quantity="700ml", price=40.0,
+                type_of_liquor="Premium Gin", abv=47.3, origin="Scotland",
+                tasting_notes="Citrusy and floral with a hint of chamomile.",
+                suggested_pairings_raw="Great with tonic or in a martini.",
+                user_notes="A favorite for martinis and gin and tonics."),
+        Spirit(name="Copperhead Gin", brand="Copperhead", category="Gin", 
+                quantity="500ml", price=40.95, abv=40.0, type_of_liquor="Belgian Gin", origin="Belgium",
+                user_notes="De gebruikte botanicals zijn engelwortel, jeneverbessen, kardemom, korianderzaad en sinaasappelzeste. Samen zorgt dit voor een soepel en kruidig karakter."),
+        Spirit(name= "Monkey 47 Schwarzwald Dry Gin", brand="Monkey 47", category="Gin",
+               quantity="500ml", price=36.5, abv=47.0, origin="Germany", type_of_liquor="Schwarzwald Dry Gin",),
+        
         # ... add all your father's spirits ...
 
         # === Mixers ===
@@ -33,6 +46,7 @@ def create_bar_inventory():
               mixer_type="Vermouth"),
         Mixer(name="Martini Rosso", brand="Martini", category="Sweet Vermouth", quantity="750ml", price=10.0,
               mixer_type="Vermouth"),
+        Mixer(name="Coca-Cola Classic", brand="Coca-Cola", category="Cola", quantity="6x330ml", price=4.0, mixer_type="Cola",),
         # ... add all your mixers ...
 
         # === Garnishes ===
